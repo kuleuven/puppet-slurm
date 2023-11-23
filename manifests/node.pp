@@ -31,7 +31,7 @@
 define slurm::node (
   String[1] $node_name = $name,
   Optional[Stdlib::Host] $node_hostname = undef,
-  Optional[Stdlib::IP::Address] $node_addr = undef,
+  Optional $node_addr = undef,
   Optional[Stdlib::IP::Address] $bcast_addr = undef,
   Optional[Variant[String[1], Integer]] $boards = undef,
   Optional[Variant[String[1], Integer]] $core_spec_count  = undef,
