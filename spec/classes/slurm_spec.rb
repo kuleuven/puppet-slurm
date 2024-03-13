@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'slurm' do
   on_supported_os.each do |os, os_facts|
-    context "on #{os}" do
+    context "with #{os}" do
       let(:facts) do
         os_facts.merge('processors' => { 'count' => 1 })
       end
@@ -21,7 +23,7 @@ describe 'slurm' do
           slurmdbd: slurmdbd,
           database: database,
           slurmrestd: slurmrestd,
-          install_method: 'package',
+          install_method: 'package'
         }
       end
       let(:params) { default_params.merge(param_override) }
@@ -36,14 +38,24 @@ describe 'slurm' do
 
       it_behaves_like 'slurm::client', os_facts
 
-      context 'install from source' do
+      context 'when install from source' do
         let(:param_override) { { version: '20.02.0', install_method: 'source' } }
 
         it { is_expected.to compile.with_all_deps }
+
         it_behaves_like 'slurm::common::install::source', os_facts
       end
 
-      context 'slurmd' do
+      context 'when install method is none' do
+        let(:param_override) { { install_method: 'none' } }
+
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.not_to contain_class('slurm::common::install::source') }
+        it { is_expected.not_to contain_class('slurm::common::install::rpm') }
+        it { is_expected.not_to contain_class('slurm::common::install::apt') }
+      end
+
+      context 'when slurmd' do
         let(:client) { false }
         let(:slurmd) { true }
 
@@ -58,7 +70,7 @@ describe 'slurm' do
         it_behaves_like 'slurm::slurmd', os_facts
       end
 
-      context 'slurmctld' do
+      context 'when slurmctld' do
         let(:client) { false }
         let(:slurmctld) { true }
 
@@ -73,7 +85,7 @@ describe 'slurm' do
         it_behaves_like 'slurm::slurmctld', os_facts
       end
 
-      context 'slurmdbd' do
+      context 'when slurmdbd' do
         let(:client) { false }
         let(:slurmdbd) { true }
 
@@ -88,7 +100,7 @@ describe 'slurm' do
         it_behaves_like 'slurm::slurmdbd', os_facts
       end
 
-      context 'database' do
+      context 'when database' do
         let(:pre_condition) { 'include ::mysql::server' }
         let(:client) { false }
         let(:database) { true }
@@ -104,7 +116,7 @@ describe 'slurm' do
         it_behaves_like 'slurm::slurmdbd::db', os_facts
       end
 
-      context 'slurmrestd', unless: os_facts[:os]['family'] == 'Debian' do
+      context 'when slurmrestd', unless: os_facts[:os]['family'] == 'Debian' do
         let(:client) { false }
         let(:slurmrestd) { true }
 

@@ -12,7 +12,6 @@ slurm::source_dependencies:
   - hwloc-devel
   - openssl-devel
   - curl-devel
-  - libcgroup
   - dbus-devel
   - lz4-devel
   - freeipmi-devel
