@@ -14,7 +14,7 @@
     },
     {
       "name": "puppetlabs/firewall",
-      "version_requirement": ">=6.0.0 <9.0.0"
+      "version_requirement": ">=7.0.0 <9.0.0"
     },
     {
       "name": "puppetlabs/concat",
@@ -101,7 +101,11 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 8.0.0 < 9.0.0"
+      "version_requirement": ">= 7.0.0 < 9.0.0"
+    },
+    {
+      "name": "openvox",
+      "version_requirement": ">= 7.0.0 < 9.0.0"
     }
   ],
   "tags": [
