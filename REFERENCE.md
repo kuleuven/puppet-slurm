@@ -35,6 +35,8 @@
 * `slurm::slurmdbd::service`
 * `slurm::slurmrestd`
 * `slurm::slurmrestd::service`
+* `slurm::sackd`
+* `slurm::sackd::service`
 
 ### Defined types
 
@@ -216,6 +218,14 @@ The following parameters are available in the `slurm` class:
 * [`slurmrestd_service_limits`](#-slurm--slurmrestd_service_limits)
 * [`slurmrestd_options`](#-slurm--slurmrestd_options)
 * [`slurmrestd_restart_on_failure`](#-slurm--slurmrestd_restart_on_failure)
+* [`sackd`](#-slurm--sackd)
+* [`sackd_service_ensure`](#-slurm--sackd_service_ensure)
+* [`sackd_service_enable`](#-slurm--sackd_service_enable)
+* [`sackd_service_limits`](#-slurm--sackd_service_limits)
+* [`sackd_user`](#-slurm--sackd_user)
+* [`sackd_user_group`](#-slurm--sackd_user_group)
+* [`sackd_options`](#-slurm--sackd_options)
+* [`sackd_restart_on_failure`](#-slurm--sackd_restart_on_failure)
 * [`cgroup_conf_template`](#-slurm--cgroup_conf_template)
 * [`cgroup_conf_source`](#-slurm--cgroup_conf_source)
 * [`cgroup_mountpoint`](#-slurm--cgroup_mountpoint)
@@ -1400,6 +1410,70 @@ Data type: `Optional[String[1]]`
 Default value: `undef`
 
 ##### <a name="-slurm--slurmrestd_restart_on_failure"></a>`slurmrestd_restart_on_failure`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### <a name="-slurm--sackd"></a>`sackd`
+
+Data type: `Boolean`
+
+
+
+Default value: `false`
+
+##### <a name="-slurm--sackd_service_ensure"></a>`sackd_service_ensure`
+
+Data type: `Enum['running','stopped']`
+
+
+
+Default value: `'running'`
+
+##### <a name="-slurm--sackd_service_enable"></a>`sackd_service_enable`
+
+Data type: `Boolean`
+
+
+
+Default value: `true`
+
+##### <a name="-slurm--sackd_service_limits"></a>`sackd_service_limits`
+
+Data type: `Hash`
+
+
+
+Default value: `{}`
+
+##### <a name="-slurm--sackd_user"></a>`sackd_user`
+
+Data type: `String[1]`
+
+
+
+Default value: `$slurm_user`
+
+##### <a name="-slurm--sackd_user_group"></a>`sackd_user_group`
+
+Data type: `String[1]`
+
+
+
+Default value: `$slurm_user_group`
+
+##### <a name="-slurm--sackd_options"></a>`sackd_options`
+
+Data type: `Optional[String[1]]`
+
+
+
+Default value: `undef`
+
+##### <a name="-slurm--sackd_restart_on_failure"></a>`sackd_restart_on_failure`
 
 Data type: `Boolean`
 

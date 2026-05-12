@@ -25,6 +25,10 @@ class slurm::common::install::apt {
     package { 'slurmdbd': }
   }
 
+  if $slurm::sackd {
+    package { 'sackd': }
+  }
+
   if $slurm::install_pam { package { 'libpam-slurm': } }
   if $slurm::install_torque_wrapper { package { 'slurm-wlm-torque': } }
 }

@@ -45,6 +45,10 @@ class slurm::common::install::rpm {
     package { 'slurm-slurmrestd': }
   }
 
+  if $slurm::sackd {
+    package { 'slurm-sackd': }
+  }
+
   if $slurm::install_pam { package { 'slurm-pam_slurm': } }
   if $slurm::install_torque_wrapper { package { 'slurm-torque': } }
 }

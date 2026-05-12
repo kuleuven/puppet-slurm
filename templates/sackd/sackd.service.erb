@@ -1,0 +1,18 @@
+[Unit]
+Description=sackd daemon
+After=network.target munge.service
+Requires=munge.service
+
+[Service]
+Type=simple
+User=<%= scope['slurm::sackd_user'] %>
+Group=<%= scope['slurm::sackd_user_group'] %>
+EnvironmentFile=-<%= scope['slurm::env_dir'] %>/sackd
+ExecStart=<%= scope['slurm::install_prefix'] %>/sbin/sackd $SACKD_OPTIONS
+<%- if scope['slurm::sackd_restart_on_failure'] %>
+Restart=on-failure
+<%- end -%>
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
