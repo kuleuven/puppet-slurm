@@ -10,6 +10,14 @@
 # @param database
 # @param client
 # @param slurmrestd
+# @param sackd
+# @param sackd_service_ensure
+# @param sackd_service_enable
+# @param sackd_service_limits
+# @param sackd_user
+# @param sackd_user_group
+# @param sackd_options
+# @param sackd_restart_on_failure
 # @param repo_baseurl
 # @param install_method
 # @param install_prefix
@@ -208,6 +216,7 @@ class slurm (
   Boolean $database   = false,
   Boolean $client     = true,
   Boolean $slurmrestd = false,
+  Boolean $sackd      = false,
 
   # Repo (optional)
   Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl, Pattern[/^file:\/\//]]] $repo_baseurl = undef,
@@ -388,6 +397,15 @@ class slurm (
   Optional[String[1]] $slurmrestd_options = undef,
   Boolean $slurmrestd_restart_on_failure               = true,
 
+  # sackd
+  Enum['running','stopped'] $sackd_service_ensure = 'running',
+  Boolean $sackd_service_enable                   = true,
+  Hash $sackd_service_limits                      = {},
+  String[1] $sackd_user                           = $slurm_user,
+  String[1] $sackd_user_group                     = $slurm_user_group,
+  Optional[String[1]] $sackd_options              = undef,
+  Boolean $sackd_restart_on_failure               = true,
+
   # cgroups
   String $cgroup_conf_template             = 'slurm/cgroup/cgroup.conf.erb',
   Optional[String] $cgroup_conf_source               = undef,
@@ -462,8 +480,8 @@ class slurm (
     fail("Unsupported OS family: ${osfamily}, module ${module_name} only supports RedHat and Debian")
   }
 
-  if ! ($slurmd or $slurmctld or $slurmdbd or $database or $client or $slurmrestd) {
-    fail("Module ${module_name}: Must select a mode of either slurmd, slurmctld, slurmrestd, slurmdbd database, or client.")
+  if ! ($slurmd or $slurmctld or $slurmdbd or $database or $client or $slurmrestd or $sackd) {
+    fail("Module ${module_name}: Must select a mode of either slurmd, slurmctld, slurmrestd, slurmdbd, sackd, database, or client.")
   }
 
   if ('auth/jwt' in $auth_alt_types) and !($jwt_key_content or $jwt_key_source) {
@@ -680,6 +698,10 @@ class slurm (
 
   if $slurmrestd {
     contain slurm::slurmrestd
+  }
+
+  if $sackd {
+    contain slurm::sackd
   }
 
   if $include_resources {

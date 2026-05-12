@@ -17,6 +17,7 @@
     * [Role: slurmd](#role-slurmd)
     * [Role: client](#role-client)
     * [Role: slurmrestd](#role-slurmrestd)
+    * [Role: sackd](#role-sackd)
     * [slurm::conf usage](#slurmconf-usage)
 3. [Reference - Parameter and detailed reference to all options](#reference)
 4. [Limitations - OS compatibility, etc.](#limitations)
@@ -133,6 +134,7 @@ The behavior of this module is determined by 5 booleans that set the role for a 
 * `database` - When true will setup a host to manage the slurmdbd MySQL database
 * `slurmd` - When true will setup a host to run slurmd
 * `slurmrestd` - When true will setup a host to run slurmrestd
+* `sackd` - When true will setup a host to run sackd
 
 **NOTE:** The only role enabled by default is `client`.
 
@@ -230,6 +232,30 @@ For the host to run slurmrestd:
 
 ```yaml
 slurm::slurmrestd: true
+```
+
+### Role: sackd
+
+The sackd daemon can be enabled on login nodes that are not running slurmd daemons to allow authentication to the cluster and it can be used to retrieve configuration information for configless SLURM.
+
+```yaml
+slurm::sackd: true
+```
+
+By default, sackd will use `--conf-server` with the slurmctld host and port when `configless` is enabled. Otherwise, it will read the slurm.conf file directly.
+
+You can also explicitly specify a configuration server:
+
+```yaml
+slurm::sackd: true
+slurm::conf_server: 'slurmctld.example.com:6817'
+```
+
+Additional options can be passed to the sackd daemon:
+
+```yaml
+slurm::sackd: true
+slurm::sackd_options: '--verbose'
 ```
 
 ### slurm::conf usage
