@@ -255,8 +255,14 @@ Additional options can be passed to the sackd daemon:
 
 ```yaml
 slurm::sackd: true
-slurm::sackd_options: '--verbose'
+slurm::sackd_options: '-v'
 ```
+
+Relevant configuration parameters for sackd service behavior:
+
+* `slurm::conf_server` - Explicit `host:port` used for `--conf-server`
+* `slurm::configless` - Enables automatic `--conf-server` from `slurmctld_host` and `slurmctld_port`
+* `slurm::sackd_options` - Additional command-line options appended to `SACKD_OPTIONS`
 
 ### slurm::conf usage
 
